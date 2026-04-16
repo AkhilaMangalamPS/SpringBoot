@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+    <style>
+        body{
+            font-family: Arial;
+            text-align: center;
+        }
+        input,button{
+            margin: 5px;
+            padding: 8px;
+        }
+        .box{
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+<h1> Student Management System</h1>
+<div class="box">
+    <h3>Add Student</h3>
+    <input id="addId" placeholder="ID">
+    <input id="addName" placeholder="Name">
+    <input id="addAge" placeholder="Age">
+    <button onclick="addStudent()">Add</button>
+    <p id="addMsg"></p>
+</div>
+
+<div class="box">
+    <h3>Search Student</h3>
+    <input id="searchId" placeholder="ID">
+    <button onclick="searchStudent()">Search</button>
+    <p id="searchMsg"></p>
+</div>
+
+<div class="box">
+    <h3>Delete Student</h3>
+    <input id="deleteId" placeholder="ID">
+    <button onclick="deleteStudent()">Delete</button>
+    <p id="deleteMsg"></p>
+</div>
+
+<div class="box">
+    <h3>Update Student</h3>
+    <input id="updateId" placeholder="ID">
+    <input id="updateName" placeholder="Name">
+    <input id="updateAge" placeholder="Age">
+    <button onclick="updateStudent()">Update</button>
+    <p id="updateMsg"></p>
+</div>
+
+<script>
+    const baseUrl = "http://localhost:8080/students";
+
+    function addStudent() {
+        const student = {
+            id: parseInt(document.getElementById("addId").value),
+            name: document.getElementById("addName").value,
+            age: parseInt(document.getElementById("addAge").value)
+        };
+
+        fetch(baseUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(student)
+        })
+            .then(res => res.json())
+            .then(() => {
+                document.getElementById("addMsg").innerText = "Student Added Successfully";
+            })
+            .catch(() => {
+                document.getElementById("addMsg").innerText = "Error adding student";
+            });
+    }
+
+    function searchStudent(){
+        const id = document.getElementById("searchId").value;
+        fetch(baseUrl + "/" + id)
+            .then(res => {
+                if(!res.ok){
+                    throw new Error("Student not found");
+                }
+                return res.json()
+            })
+            .then(data => {
+                if(data)
+                    document.getElementById("searchMsg").innerText = data.name + " (Age: " + data.age + ")";
+                else
+                    document.getElementById("searchMsg").innerText = "Student not found";
+            })
+            .catch(() => document.getElementById("searchMsg").innerText = "Error");
+    }
+
+    function deleteStudent(){
+        const id = document.getElementById("deleteId").value;
+        fetch(baseUrl + "/" + id, { method : "DELETE"})
+            .then(res => res.text())
+            .then(msg => document.getElementById("deleteMsg").innerText = msg)
+            .catch(() => document.getElementById("deleteMsg").innerText = "Error");
+    }
+
+    function updateStudent(){
+        const id = document.getElementById("updateId").value;
+        const student = {
+            id: parseInt(id),
+            name: document.getElementById("updateName").value,
+            age: document.getElementById("updateAge").value
+        };
+        fetch(baseUrl + "/" + id,{
+            method : "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(student)
+        })
+            .then(res => {
+                if(!res.ok){
+                    throw new Error("Updtae failed!!");
+                }
+                return res.text()
+            })
+            .then( msg => document.getElementById("updateMsg").innerText = msg)
+            .catch(() => document.getElementById("updateMsg").innerText = "Error");
+    }
+</script>
+
+
+</body>
+</html>
