@@ -1,4 +1,4 @@
-package com.practice.helloworld;
+ package com.practice.helloworld;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,28 +18,28 @@ public class HelloController {
     }
 
 
-//    @GetMapping("/hello")
-//    public String sayHello(){
-//        return "welcome Akhila!";
-//    }
-//
-//    @GetMapping("/bye")
-//    public String sayGoodBye(){
-//        return "GoodBye Akhila!!";
-//    }
-//
-//    @GetMapping("/name")
-//    public String getName(@RequestParam String user){
-//        return "My name is "+ user;
-//    }
-//
-//    @GetMapping("/newname/{n}")
-//    public String name(@PathVariable String n){
-//        return "My name is "+ n;
-//    }
-//
-//    @GetMapping("/nameage/{age}")
-//    public String info(@PathVariable int age,@RequestParam String name){
-//        return "Name :" + name + "Age: " + age;
-//    }
+   @GetMapping("/hello")
+   public String sayHello(){
+       return "welcome Akhila!";
+   }
+
+   @GetMapping("/bye")
+   public String sayGoodBye(){
+       return "GoodBye Akhila!!";
+   }
+
+   @GetMapping("/name")
+   public String getName(@RequestParam String user){
+       return "My name is "+ user;
+   }
+
+   @GetMapping("/newname/{n}")
+   public String name(@PathVariable String n){
+       return "My name is "+ n;
+   }
+
+   @GetMapping("/nameage/{age}")
+   public String info(@PathVariable int age,@RequestParam String name){
+       return "Name :" + name + "Age: " + age;
+   }
 }
