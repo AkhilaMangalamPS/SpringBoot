@@ -8,15 +8,34 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *
+ * Rest Controller for managing Course-related operations
+ * Endpoints for create and retrieve courses
+ */
 @RestController
 @RequestMapping("/course")
 public class CourseController {
+    /**
+     * Service layer dependency for handling course operations
+     */
     private final CourseService courseService;
 
+    /**
+     * Constructor based dependency injection for CourseService
+     * @param courseService service responsible for course operations
+     */
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
+    /**
+     * Endpoint to create new course
+     *
+     * Accepts course details in the request body and delegates creation to the service layer , and returns the created course
+     * @param dto Course data transfer object containing course details
+     * @return Response entity containing created courseDto and Http Status
+     */
     @PostMapping
     public ResponseEntity<CourseDto> createCourse(@RequestBody CourseDto dto){
         CourseDto response = courseService.createCourse(dto);
@@ -24,6 +43,12 @@ public class CourseController {
 
     }
 
+    /**
+     * Endpoint to get all courses
+     *
+     * Fetches the list of all available courses from the service layer
+     * @return Response entity contains List of CourseDto and Http status
+     */
     @GetMapping
     public ResponseEntity<List<CourseDto>> getAllCourses(){
         List<CourseDto> response = courseService.getAllCourses();
