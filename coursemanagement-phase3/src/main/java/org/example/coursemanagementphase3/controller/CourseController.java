@@ -4,6 +4,7 @@ import org.example.coursemanagementphase3.dto.CourseDto;
 import org.example.coursemanagementphase3.service.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +37,8 @@ public class CourseController {
      * @param dto Course data transfer object containing course details
      * @return Response entity containing created courseDto and Http Status
      */
-    @PostMapping
+    @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN','FACULTY')")
     public ResponseEntity<CourseDto> createCourse(@RequestBody CourseDto dto){
         CourseDto response = courseService.createCourse(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -49,7 +51,8 @@ public class CourseController {
      * Fetches the list of all available courses from the service layer
      * @return Response entity contains List of CourseDto and Http status
      */
-    @GetMapping
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRle('ADMIN','FACULTY','STUDENT')")
     public ResponseEntity<List<CourseDto>> getAllCourses(){
         List<CourseDto> response = courseService.getAllCourses();
         return ResponseEntity.status(HttpStatus.OK).body(response);

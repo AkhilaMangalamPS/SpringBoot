@@ -39,6 +39,13 @@ public class Student {
     private String email;
 
     /**
+     * password of the student
+     * - password cannot be null
+     */
+    @Column(nullable = false)
+    private String password;
+
+    /**
      * Enrollment list of the student
      * One student can enroll many courses
      * FetchType.LAZY is used to improve performance
@@ -96,6 +103,23 @@ public class Student {
      */
     public void setEmail(String email){
         this.email = email;
+    }
+
+
+    /**
+     * Get the password of the student
+     * @return Password pf the student
+     */
+    public String getPassword(){
+        return password;
+    }
+
+    /**
+     * Sets the password for student
+     * @param password password of student
+     */
+    public void setPassword(String password){
+        this.password = password;
     }
 
     /**

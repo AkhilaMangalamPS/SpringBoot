@@ -9,7 +9,9 @@ import org.example.coursemanagementphase3.exception.StudentNotFoundException;
 import org.example.coursemanagementphase3.service.StudentServiceImplementation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,8 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@WebMvcTest(StudentController.class)
+@SpringBootTest
+@AutoConfigureMockMvc(addFilters = false)
 public class StudentControllerTest {
     @MockBean
     private StudentServiceImplementation studentService;
@@ -35,6 +37,7 @@ public class StudentControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @AutoConfigureMockMvc(addFilters = false)
     void testCreateStudent() throws Exception{
         StudentRequestDto request = new StudentRequestDto(
                 "Akhila",

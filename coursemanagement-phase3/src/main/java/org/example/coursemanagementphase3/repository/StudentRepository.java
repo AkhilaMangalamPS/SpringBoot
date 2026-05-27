@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByNameContaining(String name);
@@ -25,5 +26,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @EntityGraph(attributePaths = {"enrollments", "enrollments.course"})
     @Query("SELECT s FROM Student s")
     List<Student> findAllWithGraph();
+
+    Optional<Student> findByEmail(String email);
 
 }
